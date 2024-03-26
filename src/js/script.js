@@ -36,6 +36,57 @@ const slider = tns({
 
     toggleSlide('.catalog-item__link');
     toggleSlide('.catalog-item__back');
-      
+    
+    $('[data-modal=consultation]').on('click', function(){
+      $('.overlay, #consultation').fadeIn('slow');
+    });
+
+    $('.modal__close').on('click', function() {
+      $('.overlay, #consultation, #order, #thanks').fadeOut('slow');
+    });
+
+    $('.button_mini').each(function(i) {
+      $(this).on('click', function() {
+        $('#order .modal__descr').text($('.catalog-item__subtitle').eq(i).text());
+        $('.overlay, #order').fadeIn('slow');
+      })
+    });
+
+    function validateForms (form) {
+      $(form).validate({
+        rules: {
+          name: {
+          required: true,
+            minlength: 2
+          },  
+          phone: 'required',
+          email: {
+            required: true,
+            email: true
+          }
+        },
+        messages: {
+          name: {
+            required: "Пожалуйста, введите свое имя",
+            minlength: jQuery.validator.format("Имя должно иметь минимум {0} символа!")
+          },
+          phone: "Пожалуйста, введите свой телефонный номер",
+          email: {
+            required: "Пожалуйста, введите свой email",
+            email: "Email адрес должен иметь формат name@domain.com"
+          }
+        }
+      });
+    }
+    validateForms('#consultation-form');
+    validateForms('#order form');
+    validateForms('#consultation form');
+    $('input[name=phone]').mask("+7 (999) 999-99-99");
+  //   jQuery(function($){
+  //     $("#date").mask("99/99/9999");
+  //     $("#phone").mask("(999) 999-9999");
+  //     $("#tin").mask("99-9999999");
+  //     $("#ssn").mask("999-99-9999");
+  //  });
 });
 })(jQuery);
