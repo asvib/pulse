@@ -82,11 +82,26 @@ const slider = tns({
     validateForms('#order form');
     validateForms('#consultation form');
     $('input[name=phone]').mask("+7 (999) 999-99-99");
-  //   jQuery(function($){
-  //     $("#date").mask("99/99/9999");
-  //     $("#phone").mask("(999) 999-9999");
-  //     $("#tin").mask("99-9999999");
-  //     $("#ssn").mask("999-99-9999");
-  //  });
+
+    $('form').submit(function(e) {
+      e.preventDefault();
+
+      if(!$(this).validate()){
+        return;
+      }
+
+      $.ajax({
+        type: "POST",
+        url: "mailer/smart.php",
+        data: $(this).serialize()
+      }).done(function() {
+        $(this).find("input").val("");
+        $('#consultation, #order').fadeOut();
+        $('.overlay, #thanks').fadeIn('slow');
+
+        $("form").trigger("reset");
+      });
+      return false;
+    });
 });
 })(jQuery);
