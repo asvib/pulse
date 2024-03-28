@@ -15,6 +15,7 @@ const slider = tns({
     slider.goTo('next');
   });
 
+
 (function($) {
   $(function() {
   
@@ -118,5 +119,7 @@ const slider = tns({
       $("html, body").animate({scrollTop: $(_href).offset().top+"px"});
       return false;
   });
+
+  new WOW().init();
 });
 })(jQuery);
